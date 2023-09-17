@@ -1,0 +1,10 @@
+dig - used for dns lookups(detail information about dns records such as Ip adresses, Mx records)
+stat - view detail information about file(directory, size, -permission)
+ncdu -providing a more detailed and interactive overview pf disk space consumption
+tac - similar to cat but display in reversed
+comm - compareres two sorted files line by line
+timeout - runs a specified command and terminateds it if it doesnt complete qwithin the given time limit
+rename - rename files 
+pv - monitor the progress of data being transferred thought a pipeline 
+tree - displays hierarchical structure of dir and files formats
+watch - runs a specified command reperedly at set interval and displys the output in real-time allowing you to monitor changes or updates
