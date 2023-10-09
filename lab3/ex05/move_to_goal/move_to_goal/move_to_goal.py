@@ -40,12 +40,12 @@ class TurtleBot(Node):
          # Get the input from the user.
          goal_pose.x = float(sys.argv[1])
          goal_pose.y = float(sys.argv[2])
- 
+         goal_pose.theta = float(sys.argv[3])*3.14/180
          tolerance =  0.01 
  
          distance_to_goal = math.sqrt(math.pow((goal_pose.x - self.pose.x), 2) + math.pow((goal_pose.y - self.pose.y), 2))
          angle_error = self.steering_angle(goal_pose) - self.pose.theta
- 
+         
          if abs(angle_error) > tolerance:
              vel_msg.angular.z = const*angle_error  
          elif distance_to_goal >= tolerance:
@@ -53,10 +53,10 @@ class TurtleBot(Node):
              vel_msg.linear.x = const*distance_to_goal 
          else:
              vel_msg.linear.x = 0.0
-             vel_msg.angular.z = 0.0
+             vel_msg.angular.z = goal_pose.theta
              self.get_logger().info("Goal Reached!! ")
              quit()
- 
+           
          # Publishing our vel_msg
          self.velocity_publisher.publish(vel_msg)
  
