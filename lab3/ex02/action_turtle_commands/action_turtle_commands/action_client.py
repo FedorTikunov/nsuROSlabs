@@ -9,8 +9,8 @@ tasks = []
 class MessageActionClient(Node):
 
     def __init__(self):
-        super().__init__('fibonacci_action_client')
-        self._action_client = ActionClient(self, Fibonacci, 'fibonacci')
+        super().__init__('action_client')
+        self._action_client = ActionClient(self, MessageTurtleCommands, 'execute_turtle_commands')
 
     def send_goal(self, order):
         goal_msg = MessageTurtleCommands.Goal()
