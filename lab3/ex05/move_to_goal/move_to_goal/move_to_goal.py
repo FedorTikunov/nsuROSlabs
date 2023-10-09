@@ -44,7 +44,8 @@ class TurtleBot(Node):
          tolerance =  0.01 
  
          distance_to_goal = math.sqrt(math.pow((goal_pose.x - self.pose.x), 2) + math.pow((goal_pose.y - self.pose.y), 2))
-         angle_error = self.steering_angle(goal_pose) - self.pose.theta
+         '''
+          angle_error = self.steering_angle(goal_pose) - self.pose.theta
          
          if abs(angle_error) > tolerance:
              vel_msg.angular.z = const*angle_error  
@@ -56,10 +57,29 @@ class TurtleBot(Node):
              vel_msg.angular.z = goal_pose.theta
              self.get_logger().info("Goal Reached!! ")
              quit()
-           
-         # Publishing our vel_msg
+          '''
+         angle = self.steering_angle(goal_pose) 
+         vel_msg.angular.z = -self.pose.theta
          self.velocity_publisher.publish(vel_msg)
- 
+         time.sleep(3)
+         vel_msg.angular.z = angle
+         self.velocity_publisher.publish(vel_msg)
+         time.sleep(3)
+         vel_msg.linear.x = distance_to_goal
+         vel_msg.angular.z = 0.0
+         self.velocity_publisher.publish(vel_msg)
+         time.sleep(3)
+         vel_msg.linear.x = 0.0
+         vel_msg.angular.z = -angle
+         self.velocity_publisher.publish(vel_msg)
+         time.sleep(3)
+         #this is turn angle
+         vel_msg.angular.z = goal_pose.theta
+         self.velocity_publisher.publish(vel_msg)
+         time.sleep(3)
+
+         self.get_logger().info("Goal Reached!! ")
+         quit()
          
 def main(args=None):
     rclpy.init(args=args)
