@@ -12,7 +12,7 @@ class MessageActionClient(Node):
         super().__init__('action_client')
         self._action_client = ActionClient(self, MessageTurtleCommands, 'execute_turtle_commands')
 
-    def send_goal(self, order):
+    def send_goal(self, command, s, angle):
         goal_msg = MessageTurtleCommands.Goal()
         goal_msg.s = s
         goal_msg.angle = angle
@@ -65,7 +65,7 @@ def main(args=None):
     tasks.append(['turn_right', 0, 90])
     tasks.append(['forward', 1, 0])
     
-    action_client.send_goal(*goals[0])
+    action_client.send_goal(*tasks[0])
 
     rclpy.spin(action_client)
 

@@ -24,8 +24,8 @@ class MessageActionServer(Node):
     def execute_callback(self, goal_handle):
         self.get_logger().info('Executing goal...')
         
-        feedback_msg = MessageTurtleCommands.Feedback()
-        feedback_msg.odom = 0
+        #feedback_msg = MessageTurtleCommands.Feedback()
+        #feedback_msg.odom = 0
         
         global curr
 
@@ -92,16 +92,21 @@ class ActionSubscriber(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    action_subscriber = ActionSubscriber()
-    action_server = MessageActionServer()
-    executor = MultiThreadedExecutor(num_threads=4)
-    executor.add_node(action_server) #1
-    executor.add_node(action_subscriber) #2
-    executor.spin() #3
-    executor.shutdown() #4
-    action_server.destroy_node()
-    action_subscriber.destroy_node()
-    rclpy.shutdown()
+
+    try:
+        action_subscriber = ActionSubscriber()
+        action_server = MessageActionServer()
+        executor = MultiThreadedExecutor(num_threads=4)
+        executor.add_node(action_server)
+        executor.add_node(action_subscriber)
+        try:
+            executor.spin()
+        finally:
+            executor.shutdown()
+            action_server.destroy_node()
+            action_subscriber.destroy_node()
+    finally:
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
