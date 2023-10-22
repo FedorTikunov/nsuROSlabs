@@ -42,7 +42,7 @@ class MessageActionClient(Node):
 
     def get_result_callback(self, future):
         result = future.result().result
-        self.get_logger().info('Result: {0}'.format(result.sequence))
+        self.get_logger().info('Result: {0}'.format(result.result))
         global goals
         goals.pop(0)
         if goals:
