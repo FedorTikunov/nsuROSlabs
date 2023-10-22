@@ -10,7 +10,7 @@ class MessageActionClient(Node):
 
     def __init__(self):
         super().__init__('action_client')
-        self._action_client = ActionClient(self, MessageTurtleCommands, 'execute_turtle_commands')
+        self._action_client = ActionClient(self, MessageTurtleCommands, 'execute_turtle_interfaces')
 
     def send_goal(self, command, s, angle):
         goal_msg = MessageTurtleCommands.Goal()
