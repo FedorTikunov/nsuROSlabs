@@ -3,7 +3,7 @@ from rclpy.action import ActionServer
 from rclpy.node import Node
 
 from action_turtle_interfaces.action import MessageTurtleCommands
-
+import math
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 from rclpy.executors import MultiThreadedExecutor
@@ -24,12 +24,12 @@ class MessageActionServer(Node):
     def execute_callback(self, goal_handle):
         self.get_logger().info('Executing goal...')
         
-        #feedback_msg = MessageTurtleCommands.Feedback()
-        #feedback_msg.odom = 0
+        feedback_msg = MessageTurtleCommands.Feedback()
+        feedback_msg.odom = 0
         
         global curr
 
-        x0, y0, t0 = curr.x, curr.y, curr.theta
+        x, y, t = curr.x, curr.y, curr.theta
 
         
         twist = Twist()
@@ -46,13 +46,13 @@ class MessageActionServer(Node):
             if goal_handle.request.command == 'turn_right':
                 twist.angular.z = -1.0*float(goal_handle.request.angle)*2*3.14/360  # deg -> rad
                 self.publisher.publish(twist)
-                while (abs((curr.theta-t0)) < float(goal_handle.request.angle)*2*3.14/360):
-                    self.get_logger().info(f'rotated: {(curr.theta-t0)*360/6.28} degrees')
+                while (abs((curr.theta-t)) < float(goal_handle.request.angle)*2*3.14/360):
+                    self.get_logger().info(f'rotated: {(curr.theta-t)*360/6.28} degrees')
             else: 
                 twist.angular.z = float(goal_handle.request.angle)*2*3.14/360
                 self.publisher.publish(twist)
-                while (abs((curr.theta-t0)) < float(goal_handle.request.angle)*2*3.14/360):
-                    self.get_logger().info(f'rotated: {abs(curr.theta-t0)*360/6.28} degrees')
+                while (abs((curr.theta-t)) < float(goal_handle.request.angle)*2*3.14/360):
+                    self.get_logger().info(f'rotated: {abs(curr.theta-t)*360/6.28} degrees')
 
         goal_handle.succeed()
         twist.linear.x = 0.0

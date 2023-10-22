@@ -14,16 +14,12 @@ class MessageActionClient(Node):
 
     def send_goal(self, command, s, angle):
         goal_msg = MessageTurtleCommands.Goal()
+        goal_msg.command = command
         goal_msg.s = s
         goal_msg.angle = angle
-        goal_msg.command = command
-
-
         self._action_client.wait_for_server()
 
-        self._send_goal_future = self._action_client.send_goal_async(
-            goal_msg,
-            feedback_callback=self.feedback_callback)
+        self._send_goal_future = self._action_client.send_goal_async(goal_msg, feedback_callback=self.feedback_callback)
 
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
@@ -43,9 +39,9 @@ class MessageActionClient(Node):
     def get_result_callback(self, future):
         result = future.result().result
         self.get_logger().info('Result: {0}'.format(result.result))
-        global goals
-        goals.pop(0)
-        if goals:
+        global tasks
+        tasks.pop(0)
+        if tasks:
             self.send_goal(*tasks[0])
         else:
             rclpy.shutdown()
@@ -61,7 +57,8 @@ def main(args=None):
 
     action_client = MessageActionClient()
     
-    tasks.append(['forward', 2, 0])
+    tasks.append(['turn_right', 0, 90])
+    tasks.append(['forward', 3, 0])
     tasks.append(['turn_right', 0, 90])
     tasks.append(['forward', 1, 0])
     
