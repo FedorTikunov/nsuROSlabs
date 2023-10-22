@@ -52,7 +52,7 @@ class MessageActionClient(Node):
 
     def feedback_callback(self, feedback_msg):
         feedback = feedback_msg.feedback
-        self.get_logger().info('Received feedback: {0}'.format(feedback.partial_sequence))
+        self.get_logger().info('Received feedback: {0}'.format(feedback.odom))
 
 
 def main(args=None):
