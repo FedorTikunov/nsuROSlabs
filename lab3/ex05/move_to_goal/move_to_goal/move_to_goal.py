@@ -41,8 +41,12 @@ class TurtleBot(Node):
          # Get the input from the user.
          goal_pose.x = float(sys.argv[1])
          goal_pose.y = float(sys.argv[2])
-         goal_pose.theta = float(sys.argv[3])*3.14/180
+         goal_pose.theta = float(sys.argv[3])*180/3.14
          tolerance =  0.01 
+ 		
+         if (goal_pose.x>10 or goal_pose.x<0 or goal_pose.y>10 or goal_pose.y<0 or goal_pose.theta>360 or goal_pose.theta<-360):
+            self.get_logger().info("Wrong data")
+            quit()
  
          distance_to_goal = math.sqrt(math.pow((goal_pose.x - self.pose.x), 2) + math.pow((goal_pose.y - self.pose.y), 2))
          '''
@@ -59,25 +63,26 @@ class TurtleBot(Node):
              self.get_logger().info("Goal Reached!! ")
              quit()
           '''
+         #self.get_logger().info('%s" ' % goal_pose.theta) 
          angle = self.steering_angle(goal_pose) 
          vel_msg.angular.z = -self.pose.theta
          self.velocity_publisher.publish(vel_msg)
-         time.sleep(3)
+         time.sleep(2)
          vel_msg.angular.z = angle
          self.velocity_publisher.publish(vel_msg)
-         time.sleep(3)
+         time.sleep(2)
          vel_msg.linear.x = distance_to_goal
          vel_msg.angular.z = 0.0
          self.velocity_publisher.publish(vel_msg)
-         time.sleep(3)
+         time.sleep(2)
          vel_msg.linear.x = 0.0
          vel_msg.angular.z = -angle
          self.velocity_publisher.publish(vel_msg)
-         time.sleep(3)
+         time.sleep(2)
          #this is turn angle
          vel_msg.angular.z = goal_pose.theta
          self.velocity_publisher.publish(vel_msg)
-         time.sleep(3)
+         time.sleep(2)
 
          self.get_logger().info("Goal Reached!! ")
          quit()
