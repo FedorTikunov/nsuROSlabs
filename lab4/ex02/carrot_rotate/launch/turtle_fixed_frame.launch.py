@@ -17,15 +17,12 @@ def generate_launch_description():
        launch_arguments={'target_frame': 'carrot1'}.items(),
        )
 
+
     return LaunchDescription([
         demo_nodes,
         Node(
             package='carrot_rotate',
-            executable='turtle_carrot',
-            name='turtle_carrot',
-            parameters=[
-                {'radius': 1},
-                {'direction_of_rotation': 1}
-            ]
+            executable='fixed_frame_broadcaster',
+            name='fixed_broadcaster',
         ),
     ])
