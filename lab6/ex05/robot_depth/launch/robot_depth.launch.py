@@ -96,14 +96,13 @@ def generate_launch_description():
         output='screen'
     )
 
-    move = Node(
-        package='robot_lidar',
-        executable='robot_lidar',
-        name='robot_lidar',
+    depth_avoidance = Node(
+        package='robot_depth',
+        executable='robot_depth',
+        name='robot_depth',
         parameters=[
         ]
     )
-
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
@@ -111,7 +110,7 @@ def generate_launch_description():
         bridge,
         robot_state_publisher,
         rviz,
-        move,
+        depth_avoidance,
         TimerAction(
             period=5.0,
             actions=[create])

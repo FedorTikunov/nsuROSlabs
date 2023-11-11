@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 import os
 from glob import glob
-package_name = 'robot_lidar'
+package_name = 'robot_depth'
 
 setup(
     name=package_name,
@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'robot_lidar = robot_lidar.robot_lidar:main'
+            'robot_depth = robot_depth.robot_depth:main'
         ],
     },
 )

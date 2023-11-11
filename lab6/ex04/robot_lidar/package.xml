@@ -4,7 +4,7 @@
   <name>robot_lidar</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="tpevko@mail.ru">tonya</maintainer>
+  <maintainer email="f.tikunov@g.nsu.ru">fedor</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
